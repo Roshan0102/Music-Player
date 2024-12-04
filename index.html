@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
+            transition: background-color 0.5s ease; /* Smooth background color change */
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            width: 350px;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-family: 'Arial', sans-serif;
+        }
+        audio {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.1);
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Music Player 🎶</h1>
+        <audio controls id="audio"></audio>
+        <div class="buttons">
+            <button id="playPrevious">⏮ Previous</button>
+            <button id="pause" onclick="pauseAudio()">⏸ Pause</button>
+            <button id="forward">⏭ Next</button>
+        </div>
+    </div>
+
+    <script>
+        const audioFiles = [
+            'C:\\Users\\admin\\Documents\\HTML\\Javascript\\musicplayer\\lost-in-dreams-abstract-chill-downtempo-cinematic-future-beats-270241.mp3',
+            'C:\\Users\\admin\\Documents\\HTML\\Javascript\\musicplayer\\showreel-music-promo-advertising-opener-vlog-background-intro-theme-261601.mp3',
+            'C:\\Users\\admin\\Documents\\HTML\\Javascript\\musicplayer\\spinning-head-271171.mp3',
+            'C:\Users\admin\Documents\HTML\Javascript\musicplayer\stylish-deep-electronic-262632.mp3'
+        ];
+
+        const audioPlayer = document.getElementById('audio');
+        const nextButton = document.getElementById('forward');
+        const prevButton = document.getElementById('playPrevious');
+
+        let currentIndex = 0;
+
+        // Utility to generate a random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Load audio and change background color
+        function loadAudio(currentIndex) {
+            audioPlayer.src = audioFiles[currentIndex];
+            audioPlayer.play();
+            document.body.style.backgroundColor = getRandomColor(); // Change background color
+        }
+
+        // Initial setup
+        loadAudio(currentIndex);
+
+        // Play next song
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % audioFiles.length;
+            loadAudio(currentIndex);
+        });
+
+        // Play previous song
+        prevButton.addEventListener('click', () => {
+            currentIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
+            loadAudio(currentIndex);
+        });
+
+        // Pause the current song
+        function pauseAudio() {
+            audioPlayer.pause();
+        }
+    </script>
+</body>
+</html>
